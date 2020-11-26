@@ -8,8 +8,8 @@ const tweetsRouter = require("./routes/tweets");
 
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(indexRouter);
-app.use(tweetsRouter);
+app.use("/", indexRouter);
+app.use("/tweets", tweetsRouter);
 
 // Catch unhandled requests and forward to error handler.
 app.use((req, res, next) => {
@@ -26,7 +26,7 @@ app.use((err, req, res, next) => {
   const isProduction = environment === "production";
   res.json({
     title: err.title || "Server Error",
-    message: err.message,
+    errors: err.errors,
     stack: isProduction ? null : err.stack,
   });
 });
